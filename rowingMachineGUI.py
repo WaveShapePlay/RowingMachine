@@ -16,6 +16,7 @@ class rowingGUI:
         master.title("Rowing Machine")
 
         self.startCount = 0
+        self.runningReedCount = 0
         
         self.btn_Start= tk.Button(root, text="Start", command=self.startWorkout)
         self.btn_Start.grid(row=0, column=0)
@@ -29,18 +30,26 @@ class rowingGUI:
         self.lbl_StopTime = tk.Label(root, font=("times", 50, "bold"))
         self.lbl_StopTime.grid(row=1, column=1)
 
+        self.reedSpeedLabel = tk.Label(root, text = "Reed Speed: ",font=("times", 50, "bold"))
+        self.reedSpeedLabel.grid(row = 2, column =0)
+        
         self.reedSpeed = tk.Label(root, font=("times", 50, "bold"))
-        self.reedSpeed.grid(row = 2, column =0)
+        self.reedSpeed.grid(row = 2, column =1)
 
-        self.totalRowingTime = tk.Label(root, font=("times", 50, "bold"))
-        self.totalRowingTime.grid(row = 3, column =0)
+        self.reedRunningCountLabel = tk.Label(root, text = "Count: ", font=("times", 50, "bold"))
+        self.reedRunningCountLabel.grid(row = 3, column =0)
+
+        self.reedRunningCount = tk.Label(root, font=("times", 50, "bold"))
+        self.reedRunningCount.grid(row = 3, column =1)
+
+        #self.totalRowingTime = tk.Label(root, font=("times", 50, "bold"))
+        #self.totalRowingTime.grid(row = 3, column =0)
 
         self.clock = tk.Label(root, font=("times", 25, "bold"))
         self.clock.grid(row = 4, column =0)
 
         self.time_update()
-        #self.testVal = self.testValue()
-        self.rowingValueUpdate(self.reedSpeed,self.totalRowingTime)
+        self.rowingValueUpdate(self.reedSpeed)#,self.totalRowingTime)
         
         
     def startWorkout(self):
@@ -50,6 +59,7 @@ class rowingGUI:
         self.btn_Start.config(state = DISABLED)
         self.btn_Stop.config(state = NORMAL)
         self.startCount += 1
+        self.runningReedCount = 0
         if self.startCount > 1:
             self.lbl_StopTime.config(text=" ")
             ser.write(b's')
@@ -60,38 +70,34 @@ class rowingGUI:
         self.lbl_StopTime.config(text=self.stopTime)
         self.btn_Start.config(state = NORMAL)
         self.btn_Stop.config(state = DISABLED)
-    '''
-    def testValue(self):
-        test = str(random.randrange(300,1000,1))
-        return test
-    '''
     
     def time_update(self):
         self.current_time = time.strftime("%H:%M:%S")
         self.clock.config(text=self.current_time)
         self.clock.after(300, self.time_update)
 
-    def rowingValueUpdate(self,reedSpeed,totalRowingTime):
+    def rowingValueUpdate(self,reedSpeed):
         self.reedValList = list()
-        self.totalSumTime = int()
+        #self.totalSumTime = int()
         
         def update():
             self.value = self.getData()
             print(self.value)
             self.reedSpeed.after(300, update)
             try:
+                self.runningReedCount += 1
                 self.value = int(self.value)
-                self.reedValList.append(self.value)
-                self.reedValList = self.reedValList[-10:]
-                self.totalSumTime += int(self.reedValList[-1])
-                print("in update() try" + str(self.value))
                 self.reedSpeed.config(text=self.value)
-                self.totalRowingTime.config(text=self.totalSumTime)
+                #self.reedValList.append(self.value)
+                #self.reedValList = self.reedValList[-10:]
+                #self.totalSumTime += int(self.reedValList[-1])
+                #print("in update() try" + str(self.value))
+                textRunningCount = str(self.runningReedCount)
+                self.reedRunningCount.config(text=textRunningCount)
+                
             except:
                 print("Waiting for data")
             print(self.reedValList)
-            #print("testList")
-            #print(self.testList)
             #print(self.totalSumTime)
 
         update()
