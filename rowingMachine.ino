@@ -15,7 +15,7 @@ void loop(){
 
 if(Serial.available()> 0){ 
   userInput = Serial.read();               // read user input
-  if(userInput == 'o'){
+  if(userInput == 's'){
   data = analogRead(analogPin);    // read the input pin
     
     if(data < threshhold){  // 1000 for reed 800 for testing
@@ -30,14 +30,16 @@ if(Serial.available()> 0){
           
           if(userInput == 'x'){
             stopFlag = 1;
-          
           } // if user input is 'x' to stop
-        } // check to see if there is user input
-        
-        if(data < threshhold){
-          Serial.println(data);
-        
-        } // print if data < threshold
+          
+          if(userInput == 'd'){
+            if(data < threshhold){
+              Serial.println(data);
+             } // print if data < threshold
+          } // if userInput == d
+          
+         } // check to see if there is user input
+         
       } // while stopFlag == 0
       
       stopFlag = 0;

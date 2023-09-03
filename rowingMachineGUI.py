@@ -44,7 +44,7 @@ class rowingGUI:
         
         
     def startWorkout(self):
-        ser.write(b'o')
+        ser.write(b's')
         self.startTime = time.strftime("%H:%M:%S")
         self.lbl_StartTime.config(text=self.startTime)
         self.btn_Start.config(state = DISABLED)
@@ -52,7 +52,7 @@ class rowingGUI:
         self.startCount += 1
         if self.startCount > 1:
             self.lbl_StopTime.config(text=" ")
-            ser.write(b'o')
+            ser.write(b's')
             
     def stopWorkout(self):
         ser.write(b'x')
