@@ -4,7 +4,7 @@ int stopFlag = 0;
 int threshhold = 800;
 int upRow = 0;
 int downRow = 0;
-int passCount = 0;       
+int rowFlag = 0;       
 char userInput;
 unsigned long startTime = 0;
 unsigned long endTime = 0;
@@ -35,31 +35,43 @@ if(Serial.available()> 0){
           } // if user input is 'x' to stop
           
          if(userInput == 'd'){
-           
-           while(passCount < 2){
             data = analogRead(analogPin);
             if(data < threshhold){
               upRow = 1;
-              Serial.println("Got Up Row");
+              Serial.print("Got Up Row: ");
+              Serial.println(data);
               while(data < threshhold){
-                NOP;
+                data = analogRead(analogPin);
+                Serial.print("Waiting in up row: ");
+                Serial.println(data);
+                delay(1000);
               }
-              passCount = passCount + 1; 
-              } // print if data < threshold
-           } // Check passCount
-           passCount = 0;
-          } // if userInput == d
-          
-         } // check to see if there is user input
-         
-      } // while stopFlag == 0
-      
+            }
+              if(upRow == 1){
+                upRow = 0;
+                 Serial.print("Got Mid Row");
+              // if data is greater or equal to threshold
+                while(data >= threshhold){
+                  data = analogRead(analogPin);
+                  Serial.print("In Mid row!: ");
+                  Serial.println(data);
+                  delay(1000);
+                  
+                } // NOP wait loop
+                Serial.print("Full Row Done!");
+          } // while rowFlag is False
+          Serial.println("rowFlag is False, out of the loop");
+         } // check to see if there is user input 'd'
+         Serial.println("in userInput Loop");
+      } // if SerialAvailable 
+    }// while stopFlag == 0
+      Serial.println("Got Stop Flag");
       stopFlag = 0;
       endTime = millis();
       Serial.print("Total Time: ");
       Serial.println(endTime - startTime);
   
-  } // if user input equal to 'o'
+  } // if user input equal to 's'
 } //if serial.available            
        
 } // Void Loop
