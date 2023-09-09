@@ -38,31 +38,32 @@ if(Serial.available()> 0){
             data = analogRead(analogPin);
             if(data < threshhold){
               upRow = 1;
-              Serial.print("Got Up Row: ");
-              Serial.println(data);
+              //Serial.println("Got Up Row: ");
+              //Serial.println(data);
               while(data < threshhold){
                 data = analogRead(analogPin);
-                Serial.print("Waiting in up row: ");
-                Serial.println(data);
-                delay(1000);
+                //Serial.print("Waiting in up row: ");
+                //Serial.println(data);
+                //delay(1000);
               }
             }
               if(upRow == 1){
                 upRow = 0;
-                 Serial.print("Got Mid Row");
+                 //Serial.println("Got Mid Row");
               // if data is greater or equal to threshold
                 while(data >= threshhold){
                   data = analogRead(analogPin);
-                  Serial.print("In Mid row!: ");
-                  Serial.println(data);
-                  delay(1000);
+                  //Serial.print("In Mid row!: ");
+                  //Serial.println(data);
+                  //delay(1000);
                   
                 } // NOP wait loop
-                Serial.print("Full Row Done!");
+                
+                Serial.println("r");
           } // while rowFlag is False
-          Serial.println("rowFlag is False, out of the loop");
+          //Serial.println("rowFlag is False, out of the loop");
          } // check to see if there is user input 'd'
-         Serial.println("in userInput Loop");
+         //Serial.println("in userInput Loop");
       } // if SerialAvailable 
     }// while stopFlag == 0
       Serial.println("Got Stop Flag");

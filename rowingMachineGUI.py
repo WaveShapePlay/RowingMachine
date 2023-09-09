@@ -82,18 +82,24 @@ class rowingGUI:
         
         def update():
             self.value = self.getData()
-            print(self.value)
+            self.value = self.value.rstrip()
+            print(type(self.value))
+            if self.value == "r":
+                print("TRUE")
+            else:
+                print("FALSE")
             self.reedSpeed.after(300, update)
             try:
-                self.runningReedCount += 1
-                self.value = int(self.value)
-                self.reedSpeed.config(text=self.value)
-                #self.reedValList.append(self.value)
-                #self.reedValList = self.reedValList[-10:]
-                #self.totalSumTime += int(self.reedValList[-1])
-                #print("in update() try" + str(self.value))
-                textRunningCount = str(self.runningReedCount)
-                self.reedRunningCount.config(text=textRunningCount)
+                if self.value == 'r':
+                    self.runningReedCount += 1
+                    #self.value = int(self.value)
+                    self.reedSpeed.config(text=self.value)
+                    #self.reedValList.append(self.value)
+                    #self.reedValList = self.reedValList[-10:]
+                    #self.totalSumTime += int(self.reedValList[-1])
+                    #print("in update() try" + str(self.value))
+                    textRunningCount = str(self.runningReedCount)
+                    self.reedRunningCount.config(text=textRunningCount)
                 
             except:
                 print("Waiting for data")
