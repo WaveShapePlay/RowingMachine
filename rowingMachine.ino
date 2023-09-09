@@ -61,6 +61,7 @@ if(Serial.available()> 0){
                 
                 Serial.println("r");
           } // while rowFlag is False
+          
           //Serial.println("rowFlag is False, out of the loop");
          } // check to see if there is user input 'd'
          //Serial.println("in userInput Loop");
