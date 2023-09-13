@@ -30,26 +30,17 @@ class rowingGUI:
         self.lbl_StopTime = tk.Label(root, font=("times", 50, "bold"))
         self.lbl_StopTime.grid(row=1, column=1)
 
-        self.reedSpeedLabel = tk.Label(root, text = "Reed Speed: ",font=("times", 50, "bold"))
-        self.reedSpeedLabel.grid(row = 2, column =0)
-        
-        self.reedSpeed = tk.Label(root, font=("times", 50, "bold"))
-        self.reedSpeed.grid(row = 2, column =1)
-
         self.reedRunningCountLabel = tk.Label(root, text = "Count: ", font=("times", 50, "bold"))
-        self.reedRunningCountLabel.grid(row = 3, column =0)
+        self.reedRunningCountLabel.grid(row = 2, column =0)
 
         self.reedRunningCount = tk.Label(root, font=("times", 50, "bold"))
-        self.reedRunningCount.grid(row = 3, column =1)
-
-        #self.totalRowingTime = tk.Label(root, font=("times", 50, "bold"))
-        #self.totalRowingTime.grid(row = 3, column =0)
+        self.reedRunningCount.grid(row = 2, column =1)
 
         self.clock = tk.Label(root, font=("times", 25, "bold"))
-        self.clock.grid(row = 4, column =0)
+        self.clock.grid(row = 3, column =0)
 
         self.time_update()
-        self.rowingValueUpdate(self.reedSpeed)#,self.totalRowingTime)
+        self.rowingValueUpdate()
         
         
     def startWorkout(self):
@@ -76,30 +67,21 @@ class rowingGUI:
         self.clock.config(text=self.current_time)
         self.clock.after(300, self.time_update)
 
-    def rowingValueUpdate(self,reedSpeed):
+    def rowingValueUpdate(self):
         self.reedValList = list()
-        #self.totalSumTime = int()
         
         def update():
             self.value = self.getData()
             self.value = self.value.rstrip()
-            self.reedSpeed.after(300, update)
+            self.reedRunningCount.after(300, update)
             try:
                 if self.value == 'r':
                     self.runningReedCount += 1
-                    #self.value = int(self.value)
-                    self.reedSpeed.config(text=self.value)
-                    #self.reedValList.append(self.value)
-                    #self.reedValList = self.reedValList[-10:]
-                    #self.totalSumTime += int(self.reedValList[-1])
-                    #print("in update() try" + str(self.value))
                     textRunningCount = str(self.runningReedCount)
                     self.reedRunningCount.config(text=textRunningCount)
                 
             except:
-                print("Waiting for data")
-            print(self.reedValList)
-            #print(self.totalSumTime)
+                pass
 
         update()
 
