@@ -60,6 +60,7 @@ if(Serial.available()> 0){
                 } // NOP wait loop
                 
                 Serial.println("r");
+                delay(500);
           } // while rowFlag is False
           
           //Serial.println("rowFlag is False, out of the loop");

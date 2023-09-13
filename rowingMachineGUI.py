@@ -83,11 +83,6 @@ class rowingGUI:
         def update():
             self.value = self.getData()
             self.value = self.value.rstrip()
-            print(type(self.value))
-            if self.value == "r":
-                print("TRUE")
-            else:
-                print("FALSE")
             self.reedSpeed.after(300, update)
             try:
                 if self.value == 'r':
